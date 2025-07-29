@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       {/* Navbar */}
-      <nav className="bg-[#5956564A] rounded-full mt-4 px-8 py-3 flex justify-between items-center">
+      <nav className="bg-navbg rounded-full mt-4 px-8 py-3 flex justify-between items-center">
         <div className="flex items-center ">
           <div className="text-primary mr-2">
             <img src={dineLogo} />
