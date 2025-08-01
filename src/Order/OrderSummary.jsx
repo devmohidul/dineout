@@ -1,4 +1,24 @@
-export default function OrderSummary() {
+export default function OrderSummary({ orders, setOrders }) {
+  const totalOrders = orders.length;
+  const pendingOrders = orders.filter(
+    (order) => order.status === "Pending"
+  ).length;
+  const deliveredOrders = orders.filter(
+    (order) => order.status === "Delivered"
+  ).length;
+
+  const handleDelete = (id) => {
+    const updated = orders.filter((order) => order.id !== id);
+    setOrders(updated);
+  };
+
+  const handleDeliver = (id) => {
+    const updated = orders.map((order) =>
+      order.id === id ? { ...order, status: "Delivered" } : order
+    );
+    setOrders(updated);
+  };
+
   return (
     <>
       {/* <!-- Order Summary and Reports Section --> */}
@@ -9,7 +29,9 @@ export default function OrderSummary() {
           <div className="grid grid-cols-3 gap-4 mb-6">
             {/* <!-- Total Orders --> */}
             <div className="bg-cardbg rounded-lg p-4 relative overflow-hidden">
-              <div className="text-5xl font-bold text-yellow-500 mb-2">8</div>
+              <div className="text-5xl font-bold text-yellow-500 mb-2">
+                {totalOrders}
+              </div>
               <div className="bg-yellow-800 bg-opacity-50 text-yellow-200 text-xs font-medium px-3 py-1 rounded-full inline-block">
                 Total Order
               </div>
@@ -17,7 +39,9 @@ export default function OrderSummary() {
 
             {/* <!-- Pending Orders --> */}
             <div className="bg-cardbg rounded-lg p-4 relative overflow-hidden">
-              <div className="text-5xl font-bold text-red-500 mb-2">7</div>
+              <div className="text-5xl font-bold text-red-500 mb-2">
+                {pendingOrders}
+              </div>
               <div className="bg-red-800 bg-opacity-50 text-red-200 text-xs font-medium px-3 py-1 rounded-full inline-block">
                 Pending
               </div>
@@ -25,7 +49,9 @@ export default function OrderSummary() {
 
             {/* <!-- Delivered Orders --> */}
             <div className="bg-cardbg rounded-lg p-4 relative overflow-hidden">
-              <div className="text-5xl font-bold text-green-500 mb-2">1</div>
+              <div className="text-5xl font-bold text-green-500 mb-2">
+                {deliveredOrders}
+              </div>
               <div className="bg-green-800 bg-opacity-50 text-green-200 text-xs font-medium px-3 py-1 rounded-full inline-block">
                 Delivered
               </div>
@@ -60,6 +86,7 @@ export default function OrderSummary() {
               </select>
             </div>
           </div>
+          {/* Order Table */}
           <div className="bg-cardbg rounded-lg p-4">
             <div className="reports-container">
               <table className="min-w-full">
@@ -74,154 +101,47 @@ export default function OrderSummary() {
                   </tr>
                 </thead>
                 <tbody className="text-sm">
-                  {/* <!-- Row 1 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Sumit Saha</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 2 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Akash Ahmed</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-green-500">DELIVERED</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 3 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Saad Hasan</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 4 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">MD Salahuddin</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 5 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Ferdous</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 6 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Rafe</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 7 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Sarwar</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
-
-                  {/* <!-- Row 8 --> */}
-                  <tr className="border-t border-gray-700">
-                    <td className="py-3">21</td>
-                    <td className="py-3">Obaidul</td>
-                    <td className="py-3">5</td>
-                    <td className="py-3">123123</td>
-                    <td className="py-3">
-                      <span className="text-red-500">PENDING</span>
-                    </td>
-                    <td className="py-3">
-                      <button className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
-                        Delete
-                      </button>
-                      <button className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
-                        DELIVER
-                      </button>
-                    </td>
-                  </tr>
+                  {orders.map((order) => (
+                    <tr key={order.id} className="border-t border-gray-700">
+                      <td className="py-3">{order.id}</td>
+                      <td className="py-3">{order.customerName}</td>
+                      <td className="py-3">{order.items.length}</td>
+                      <td className="py-3">BDT {order.total}</td>
+                      <td className="py-3">
+                        <span
+                          className={`${order.status} === 'Pending' ? "text-red-500" : "text-green-500"`}
+                        >
+                          {order.status.toUpperCase()}
+                        </span>
+                      </td>
+                      <td className="py-3">
+                        <button
+                          className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300"
+                          onClick={() => handleDelete(order.id)}
+                        >
+                          Delete
+                        </button>
+                        {order.status === "Pending" && (
+                          <button
+                            className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300"
+                            onClick={() => handleDeliver(order.id)}
+                          >
+                            DELIVER
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                  {orders.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan="6"
+                        className="text-center text-gray-400 py-4"
+                      >
+                        No orders placed yet.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

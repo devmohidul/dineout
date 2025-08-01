@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { foodItems } from "./FoodItems";
 
-export default function Orders() {
-  const [items, setItems] = useState(foodItems);
+export default function Orders({ items, setItems, onPlaceOrder }) {
+  const [customerName, setCustomerName] = useState("");
 
   const toggleItem = (id) => {
     const updated = items.map((item) =>
@@ -16,6 +15,17 @@ export default function Orders() {
     (sum, item) => (item.selected ? sum + item.price : sum),
     0
   );
+
+  const hasSelection = items.some((item) => item.selected);
+  const hasCustomerName = customerName.trim().length > 0;
+  const canPlaceOrder = hasSelection && hasCustomerName;
+
+  const handleClick = () => {
+    if (canPlaceOrder) {
+      onPlaceOrder(customerName);
+      setCustomerName("");
+    }
+  };
 
   return (
     <>
@@ -33,6 +43,8 @@ export default function Orders() {
           </label>
           <input
             type="text"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
             className="w-full bg-gray-700 bg-opacity-50 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"
           />
         </div>
@@ -101,7 +113,15 @@ export default function Orders() {
         </div>
 
         {/* Place Order Button */}
-        <button className="w-full bg-[#FF602C] hover:bg-opacity-90 text-white font-medium py-3 rounded-full transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+        <button
+          className={`w-full bg-[#FF602C] hover:bg-opacity-90 text-white font-medium py-3 rounded-full transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 ${
+            canPlaceOrder
+              ? "bg-[#FF602C] hover:bg-opacity-90 hover:shadow-lg hover:-translate-y-1"
+              : "bg-gray-700 text-gray-400 cursor-not-allowed"
+          }`}
+          onClick={handleClick}
+          disabled={!canPlaceOrder}
+        >
           Place Order (BDT {total})
         </button>
       </div>
