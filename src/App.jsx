@@ -39,7 +39,7 @@ export default function App() {
             setItems={setItems}
             onPlaceOrder={handlePlaceOrder}
           />
-          <OrderSummary orders={orders} />
+          <OrderSummary orders={orders} setOrders={setOrders} />
         </div>
       </div>
     </div>
