@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../Header";
 import "./App.css";
 import { foodItems } from "./Order/FoodItems";
@@ -8,6 +8,19 @@ import OrderSummary from "./Order/OrderSummary";
 export default function App() {
   const [items, setItems] = useState(foodItems);
   const [orders, setOrders] = useState([]);
+
+  // Load orders from localStorage or first mount
+  useEffect(() => {
+    const saved = localStorage.getItem("orders");
+    if (saved) {
+      setOrders(JSON.parse(saved));
+    }
+  }, []);
+
+  // Save orders to localStorage on change
+  useEffect(() => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+  }, [orders]);
 
   const handlePlaceOrder = (customerName) => {
     const selectedItems = items.filter((item) => item.selected);
