@@ -10,7 +10,7 @@ export default function OrderSummary({ orders, setOrders }) {
     (order) => order.status === "Delivered"
   );
 
-  const filterdOrders =
+  const filteredOrders =
     filter === "Pending"
       ? pendingOrders
       : filter === "Delivered"
@@ -92,7 +92,7 @@ export default function OrderSummary({ orders, setOrders }) {
                   </tr>
                 </thead>
                 <tbody className="text-sm">
-                  {filterdOrders.map((order) => (
+                  {filteredOrders.map((order) => (
                     <tr key={order.id} className="border-t border-gray-700">
                       <td className="py-3">{order.id}</td>
                       <td className="py-3">{order.customerName}</td>
@@ -127,7 +127,7 @@ export default function OrderSummary({ orders, setOrders }) {
                       </td>
                     </tr>
                   ))}
-                  {filterdOrders.length === 0 && (
+                  {filteredOrders.length === 0 && (
                     <tr>
                       <td
                         colSpan="6"
